@@ -1,7 +1,7 @@
-use std::collections::HashMap;
-use std::io::Write;
 use fake::{faker, Fake};
 use rand::prelude::*;
+use std::collections::BTreeMap;
+use std::io::Write;
 
 struct Name {
     first: String,
@@ -14,7 +14,7 @@ struct Student {
 }
 
 fn main() {
-    let mut class: HashMap<u32, Student> = HashMap::new();
+    let mut class: BTreeMap<u32, Student> = BTreeMap::new();
     let mut rng = rand::rng();
 
     // generate placeholder data
