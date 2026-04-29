@@ -2,8 +2,13 @@ use fake::{Fake, faker};
 use rand::prelude::*;
 use std::io::Write;
 
+struct Name {
+    first: String,
+    last: String,
+}
+
 struct Student {
-    name: String,
+    name: Name,
     grade: f64,
 }
 
@@ -13,7 +18,10 @@ fn main() {
 
     for _ in 1..20 {
         class.push(Student {
-            name: faker::name::en::Name().fake(),
+            name: Name {
+                first: faker::name::en::FirstName().fake(),
+                last: faker::name::en::LastName().fake(),
+            },
             grade: rng.random_range(0.0..=100.0),
         });
     }
@@ -28,7 +36,7 @@ fn main() {
             Some("list") => {
                 println!("{}", class
                     .iter()
-                    .map(|s| s.name.as_str())
+                    .map(|s| format!("{} {}", s.name.first, s.name.last))
                     .collect::<Vec<_>>()
                     .join(", ")
                 );
