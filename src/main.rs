@@ -1,6 +1,7 @@
-use fake::{Fake, faker};
-use rand::prelude::*;
+use std::collections::HashMap;
 use std::io::Write;
+use fake::{faker, Fake};
+use rand::prelude::*;
 
 struct Name {
     first: String,
@@ -9,20 +10,21 @@ struct Name {
 
 struct Student {
     name: Name,
-    grade: f64,
+    grade: u8,
 }
 
 fn main() {
-    let mut class: Vec<Student> = Vec::new();
+    let mut class: HashMap<u32, Student> = HashMap::new();
     let mut rng = rand::rng();
 
-    for _ in 1..20 {
-        class.push(Student {
+    // generate placeholder data
+    for i in 1..20 {
+        class.insert(i, Student {
             name: Name {
                 first: faker::name::en::FirstName().fake(),
                 last: faker::name::en::LastName().fake(),
             },
-            grade: rng.random_range(0.0..=100.0),
+            grade: rng.random_range(0..=100),
         });
     }
 
@@ -34,12 +36,9 @@ fn main() {
         // handle command
         match command.split_whitespace().next() {
             Some("list") => {
-                println!("{}", class
-                    .iter()
-                    .map(|s| format!("{} {}", s.name.first, s.name.last))
-                    .collect::<Vec<_>>()
-                    .join(", ")
-                );
+                for student in class.iter() {
+                    println!("#{}: {} {}: {}%", student.0, student.1.name.first, student.1.name.last, student.1.grade);
+                }
             }
             /*Some("info") => {
 
@@ -54,6 +53,7 @@ fn main() {
                 break;
             }
             None => {
+                // don't error if there is no command
                 continue;
             }
             _ => {
