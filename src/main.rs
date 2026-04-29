@@ -36,8 +36,13 @@ fn main() {
         // handle command
         match command.split_whitespace().next() {
             Some("list") => {
-                for student in class.iter() {
-                    println!("#{}: {} {}: {}%", student.0, student.1.name.first, student.1.name.last, student.1.grade);
+                for (id, student) in &class {
+                    println!("#{}: {} {}: {}%",
+                             id,
+                             student.name.first,
+                             student.name.last,
+                             student.grade
+                    );
                 }
             }
             /*Some("info") => {
