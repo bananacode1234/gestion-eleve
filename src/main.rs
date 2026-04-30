@@ -42,11 +42,16 @@ fn main() {
         // handle command
         match command.split_whitespace().next() {
             Some("list") => {
+                if class.is_empty() {
+                    println!("Class is empty");
+                    continue;
+                }
+
                 for (id, student) in &class {
-                    println!("#{}: {}: {}%",
-                             id,
-                             student.name,
-                             student.grade
+                    println!("{:<5}{:<30}{:5}%",
+                        id,
+                        student.name,
+                        student.grade,
                     );
                 }
             }
