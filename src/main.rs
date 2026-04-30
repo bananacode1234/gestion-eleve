@@ -36,11 +36,12 @@ fn main() {
 
     // main loop
     loop {
-        // input for command
-        let command = input("> ");
+        // input for command and parse arguments
+        let input = input("> ").to_lowercase();
+        let args: Vec<&str> = input.split_whitespace().collect();
 
         // handle command
-        match command.split_whitespace().next() {
+        match args.first().copied() {
             Some("list") => {
                 if class.is_empty() {
                     println!("Class is empty");
@@ -71,9 +72,8 @@ fn main() {
                 // don't error if there is no command
                 continue;
             }
-            _ => {
-                println!("Unknown command: {}", command);
-                println!("Please try again");
+            Some(unknown) => {
+                println!("Unknown command: {unknown}");
                 continue;
             }
         }
