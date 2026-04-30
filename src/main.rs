@@ -8,6 +8,12 @@ struct Name {
     last: String,
 }
 
+impl std::fmt::Display for Name {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.pad(&format!("{} {}", self.first, self.last))
+    }
+}
+
 struct Student {
     name: Name,
     grade: u8,
@@ -37,10 +43,9 @@ fn main() {
         match command.split_whitespace().next() {
             Some("list") => {
                 for (id, student) in &class {
-                    println!("#{}: {} {}: {}%",
+                    println!("#{}: {}: {}%",
                              id,
-                             student.name.first,
-                             student.name.last,
+                             student.name,
                              student.grade
                     );
                 }
