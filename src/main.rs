@@ -56,10 +56,30 @@ fn main() {
                     );
                 }
             }
-            /*Some("info") => {
+            Some("info") => {
+                // early exit
+                let id: u32 = match args.get(1) {
+                    None => {
+                        println!("Missing argument");
+                        continue;
+                    }
+                    Some(s) => match s.parse() {
+                        Err(_) => {
+                            println!("Invalid ID");
+                            continue;
+                        }
+                        Ok(id) => id,
+                    }
+                };
 
+                match class.get(&id) {
+                    Some(student) => {
+                        println!("{:<5}{:<30}{:5}%", id, student.name, student.grade);
+                    }
+                    None => println!("Student not found")
+                }
             }
-            Some("add") => {
+            /*Some("add") => {
 
             }
             Some("remove") => {
